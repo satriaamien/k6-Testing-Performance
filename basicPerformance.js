@@ -1,5 +1,5 @@
 import http from "k6/http";
-import { check } from "k6";
+import { check, sleep } from "k6";
 
 //! # TUGAS
 // - cari satu website atau api untuk ditest
@@ -61,15 +61,52 @@ import { check } from "k6";
 // }
 
 //! k6 threesholds & check
-export const options = {
-  thresholds: {
-    http_req_duration: ["avg<300", "p(90)<250"],
-    http_req_failed: ["rate<0.5"],
-    iterations: ["count>400"],
-  },
-};
+// export const options = {
+//   stages: [
+//     { duration: "5s", target: 60 },
+//     { duration: "10s", target: 60 },
+//     { duration: "5s", target: 0 },
+//   ],
+//   thresholds: {
+//     http_req_duration: ["avg<300", "p(90)<450"],
+//     http_req_failed: ["rate<0.5"],
+//   },
+// };
 
-export default function () {
-  const res = http.get("https://youtube.com");
-  check(res, { "apakah statusnya 200": (r) => r.status === 200 });
-}
+// export default function () {
+//   const res = http.get("https://test.k6.io");
+//   check(res, { "apakah statusnya 200": (r) => r.status === 200 });
+// }
+
+//! k6 with results2.json
+// k6 run --out json=results2s.json  .\basicPerformance.js
+
+// export const options = {
+//   vus: 10,
+//   duration: "2s",
+// };
+
+// export default function () {
+//   http.get("https://test.k6.io", { tags: { judul: "test.k6.io" } });
+//   http.get("https://test-api.k6.io/public/crocodiles/1/", {
+//     tags: { judul: "test-api" },
+//   });
+//    check(res, { "apakah statusnya 200": (r) => r.status === 200 });
+// }
+//! k6 with output.json
+// run with this "k6 run --out json=output.json basicPerformance.js"
+// export const options = {
+//   iterations: 2,
+// };
+
+// export default function () {
+//   http.get("https://test.k6.io", { tags: { judul: "test.k6.io" } });
+//   http.get("https://test-api.k6.io/public/crocodiles/1/", {
+//     tags: { judul: "test-api" },
+//   });
+// }
+
+//run system visual in cloud
+//**  k6 run --out cloud .\basicPerformance.js
+// run in cloud
+//**  k6 run cloud .\basicPerformance.js
